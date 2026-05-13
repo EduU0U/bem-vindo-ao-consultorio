@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Consultório do Reino Antigo</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#000;
+    color:#d1d1d1;
+    font-family:Georgia, serif;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    position:relative;
+}
+
+/* Fundo viscoso */
+body::before{
+    content:"";
+    position:absolute;
+    width:200%;
+    height:200%;
+    background:
+    radial-gradient(circle at 20% 20%, #111 0%, transparent 20%),
+    radial-gradient(circle at 80% 40%, #0a0a0a 0%, transparent 25%),
+    radial-gradient(circle at 40% 80%, #161616 0%, transparent 30%);
+    animation:moveSlime 15s linear infinite;
+    opacity:0.6;
+}
+
+@keyframes moveSlime{
+    from{
+        transform:translate(0,0);
+    }
+    to{
+        transform:translate(-120px,-60px);
+    }
+}
+
+.container{
+    position:relative;
+    z-index:2;
+    width:90%;
+    max-width:950px;
+    background:rgba(10,10,10,0.88);
+    border:1px solid #222;
+    border-radius:20px;
+    padding:40px;
+    box-shadow:0 0 40px rgba(0,0,0,0.9);
+    backdrop-filter:blur(8px);
+}
+
+h1{
+    text-align:center;
+    font-size:42px;
+    margin-bottom:35px;
+    color:#f0f0f0;
+    letter-spacing:2px;
+}
+
+.riddle{
+    white-space:pre-line;
+    line-height:2;
+    font-size:18px;
+    color:#b9b9b9;
+    margin-bottom:35px;
+}
+
+.inputBox{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+input{
+    padding:15px;
+    background:#050505;
+    border:1px solid #333;
+    border-radius:10px;
+    color:white;
+    font-size:16px;
+}
+
+input:focus{
+    outline:none;
+    border-color:#666;
+}
+
+button{
+    padding:15px;
+    background:#111;
+    border:1px solid #444;
+    color:white;
+    cursor:pointer;
+    border-radius:10px;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#1a1a1a;
+}
+
+#message{
+    margin-top:10px;
+    color:#999;
+    min-height:20px;
+}
+
+#secretScreen{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    gap:25px;
+}
+
+#secretScreen h2{
+    font-size:38px;
+}
+
+/* Espaço da imagem */
+.secretImage{
+    width:100%;
+    max-width:700px;
+    border-radius:18px;
+    border:1px solid #333;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container" id="mainScreen">
+
+<h1>Consultório do Reino Antigo</h1>
+
+<div class="riddle">
+Enigma Sancti Lapsi (A Charada do Santo Caído)
+
+"Manus sustuli ut mundum sanarem, sed eum sepelivi.
+In pectore meo ardebat pura voluntas hominem a fato liberandi.
+Vidi carnis infirmitatem, dolorem qui omnes consumebat,
+Et remedium creare decrevi, vel per ipsam haeresim.
+Ut humanitatem servarem, velum rerum naturae scindi.
+Altare meum sanctum in cunabula crudelitatis mutavi.
+Miracula mea monstra facta sunt, preces meae pestes,
+Et sanguis innocentium hodie pugiones meos lavat.
+Non malitia lapsus sum, sed nimia misericordia.
+In speculo Abyssi, sanctitas mea corruptio facta est.
+Hodie umbras governo quas dissipare iuravi,
+Et totum mundum deleo ut eum servare coner, quis sum ego?."
+</div>
+
+<div class="inputBox">
+
+<input
+type="password"
+id="password"
+placeholder="Digite a senha..."
+>
+
+<button onclick="checkPassword()">
+Abrir
+</button>
+
+<div id="message"></div>
+
+</div>
+</div>
+
+<!-- Tela secreta -->
+<div class="container" id="secretScreen">
+
+<h2>Acesso Concedido</h2>
+
+<p>Os arquivos do reino antigo foram revelados.</p>
+
+<!-- COLOQUE SUA IMAGEM AQUI -->
+<img
+src="imagem-secreta.jpg"
+class="secretImage"
+alt="Imagem secreta"
+>
+
+</div>
+
+<script>
+
+const correctPassword = "Vesper de Khaenri'ah";
+let lives = 5;
+
+function checkPassword(){
+
+    const input = document.getElementById("password");
+    const message = document.getElementById("message");
+
+    if(input.value === correctPassword){
+
+        document.getElementById("mainScreen").style.display = "none";
+        document.getElementById("secretScreen").style.display = "flex";
+
+    }else{
+
+        lives--;
+
+        if(lives > 1){
+
+            message.innerText =
+            "Senha incorreta. Você tem mais " + lives + " vidas.";
+
+        }else if(lives === 1){
+
+            message.innerText =
+            "Senha incorreta. Você tem 1 vida. Pense com sabedoria.";
+
+        }else{
+
+            message.innerText =
+            "O consultório selou sua entrada eternamente.";
+
+            input.disabled = true;
+        }
+    }
+}
+
+</script>
+
+</body>
+</html>
